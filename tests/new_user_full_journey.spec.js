@@ -1,4 +1,5 @@
 import { test } from "@playwright/test"
+import { Navigation } from "../page-objects/Navigation";
 import { ProductPage } from './../page-objects/ProductPage';
 
 test.only('New user full end-to-end test journey', async ({ page }) => {
@@ -10,8 +11,10 @@ test.only('New user full end-to-end test journey', async ({ page }) => {
     for (let i = 0; i < number; i++) {
         await productPage.addProductToBasket(i)
     }
-
     console.log(productPage.validateBasketCounter(number))
+
+    const navigation = new Navigation(page)
+    navigation.goToCheckoutPage()
 
     await page.pause()
 })

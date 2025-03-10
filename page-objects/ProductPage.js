@@ -1,11 +1,11 @@
 import { expect } from "@playwright/test"
+import { Navigation } from "./Navigation"
 
 export class ProductPage {
     // this is a method create constructor
     constructor(page) {
         this.page = page
         this.addButton = page.locator('[data-qa="product-button"]')
-        this.basketCounter = page.locator('[data-qa="header-basket-count"]')
     }
 
     // this is a function
@@ -24,17 +24,13 @@ export class ProductPage {
         await expect(specificAddButton).toHaveText('Remove from Basket')
     }
 
-    // get basket counter
-    getBasketCounter = async () => {
-        const text = await this.basketCounter.textContent()
-        console.log("Number item in basket: " + text)
-        return parseInt(text)
-    }
-
     // validate basket counter
     validateBasketCounter = async (number) => {
-        if (number == this.getBasketCounter())
+        const navigation = new Navigation(this.page)
+        if (number == navigation.getBasketCounter())  {
+            await expect(navigation.getBasketCounter()).toBe(number)
             return true
+        }
         else
             return false
     }
