@@ -19,15 +19,13 @@ export class CheckoutPage {
         console.warn({ priceIntLists })
         //  [ 499, 599, 320 ]
 
-        let minPrice = priceIntLists[0]
-        let smallestPriceIdx = 0
-        console.warn("array length: " + priceIntLists.length)
-        for (let i = 0; i <= priceIntLists.length; i++) {
-            if (minPrice > priceIntLists[i]) {
-                minPrice = priceIntLists[i]
-                smallestPriceIdx = i
-            }
-        }
+        const listPrices = allPriceTexts.map((item) => {
+            const priceWithoutDollar = item.replace('$', '')
+            return parseInt(priceWithoutDollar)
+        })
+
+        const smallestPrice = Math.min(listPrices)
+        const smallestPriceIdx = listPrices.indexOf(smallestPrice)
 
         await this.basketItemRemoveButton.nth(smallestPriceIdx).waitFor()
         await this.basketItemRemoveButton.nth(smallestPriceIdx).click()
