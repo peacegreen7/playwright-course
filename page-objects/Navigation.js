@@ -11,7 +11,7 @@ export class Navigation {
 
     // get basket counter
     getBasketCounter = async () => {
-        await this.basketCounter.waitf]For()
+        await this.basketCounter.waitFor()
         const text = await this.basketCounter.textContent()
         console.log("Number item in basket: " + text)
         return parseInt(text)
